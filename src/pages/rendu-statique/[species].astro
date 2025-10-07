@@ -1,0 +1,25 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Graphicspecies from "../../components/Graphicspecies.astro";
+import penguins from "../../assets/penguins.json";
+
+const { species } = Astro.params;
+
+// Filtrer les données pour cette espèce
+const filtered = penguins.filter((p) => p.species === species);
+
+// Génération des chemins statiques
+export async function getStaticPaths() {
+    const speciesList = [...new Set(penguins.map((p) => p.species))];
+    return speciesList.map((s) => ({ params: { species: s } }));
+}
+---
+
+<Layout title={`Détails de l'espèce : ${species}`}>
+    <h3>Espèce : {species}</h3>
+    <p class="mb-6">
+        {filtered.length} individu(s) trouvé(s) pour l'espèce {species}
+    </p>
+
+    <Graphicspecies species={species} />
+</Layout>
