@@ -1,0 +1,15 @@
+---
+const { current = "/" } = Astro.props;
+---
+
+<header>
+  <div class="nav-content">
+    <nav>
+      <ul>
+        <li><a href="/" class={current === "/" ? "active" : ""}>Accueil</a></li>
+        <li><a href="/rendu-dynamique" class={current === "/rendu-dynamique" ? "active" : ""}>Rendu Dynamique</a></li>
+        <li><a href="/rendu-statique" class={current === "/rendu-statique" ? "active" : ""}>Rendu Statique</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
