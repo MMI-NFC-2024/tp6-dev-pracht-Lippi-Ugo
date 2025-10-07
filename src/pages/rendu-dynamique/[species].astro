@@ -1,0 +1,19 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import penguins from "../../assets/penguins.json";
+import Graphicspecies from "../../components/Graphicspecies.astro";
+
+export const prerender = false;
+
+const { species } = Astro.params;
+const filteredPenguins = penguins.filter((p) => p.species === species);
+---
+
+<Layout title={`Détails de l'espèce : ${species}`}>
+    <h3>Espèce : {species}</h3>
+    <p>
+        {filteredPenguins.length} individu(s) trouvé(s) pour l'espèce {species}
+    </p>
+
+    <Graphicspecies species={species} />
+</Layout>
