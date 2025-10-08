@@ -1,0 +1,25 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Graphicstation from "../../components/Graphicstation.astro";
+import weather from "../../assets/weather.json";
+
+const { weather: weatherParam } = Astro.params;
+
+// Filtrer les données pour cette espèce
+const filtered = weather.filter((w) => w.location === weatherParam);
+
+// Génération des chemins statiques
+export async function getStaticPaths() {
+    const locations = [...new Set(weather.map((w) => w.location))];
+    return locations.map((loc) => ({ params: { weather: loc } }));
+}
+---
+
+<Layout title={`Détails station : ${weatherParam}`}>
+    <h3>Station : {weatherParam}</h3>
+    <p class="mb-6">
+        {filtered.length} enregistrement(s) trouvé(s) pour la station {weatherParam}
+    </p>
+
+    <Graphicstation location={weatherParam} />
+</Layout>

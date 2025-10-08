@@ -1,0 +1,35 @@
+---
+import weather from "../assets/weather.json";
+import * as Plot from "@observablehq/plot";
+import PlotFigure from "./PlotFigure.astro";
+
+const { location } = Astro.props;
+
+const data = weather
+  .map(d => ({ ...d, date: new Date(d.date) }))
+  .filter(d => (!location || d.location === location))
+---
+
+<div>
+    <h1 class="mb-12 text-2xl">
+        Graphique pour la station : {location}
+    </h1>
+    <PlotFigure
+        options={{
+            marks: [
+                Plot.line(data, {
+                    x: "date",
+                    y: "temp_max",
+                    stroke: "location",
+                    filter: (d) => d.location === location,
+                    title: (d) =>
+                        `${d.location}\nDate: ${new Date(d.date).toLocaleDateString()}\nTempérature max: ${d.temp_max}°C`,
+                }),
+            ],
+            x: { label: "Date" },
+            y: { label: "Température (°C)" },
+            width: 700,
+            height: 400,
+        }}
+    />
+</div>
