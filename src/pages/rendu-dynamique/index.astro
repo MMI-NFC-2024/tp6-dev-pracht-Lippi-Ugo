@@ -1,7 +1,9 @@
 ---
 import penguins from "../../assets/penguins.json";
+import weather from "../../assets/weather.json";
 import Layout from "../../layouts/Layout.astro";
 const speciesList = [...new Set(penguins.map((p) => p.species))].sort();
+const stations = [...new Set(weather.map((d) => d.location))].sort();
 ---
 
 <Layout title="Rendu dynamique">
@@ -10,9 +12,19 @@ const speciesList = [...new Set(penguins.map((p) => p.species))].sort();
     {
       speciesList.map((s) => (
         <li>
-          <a href={`/rendu-dynamique/${s}`}>{s}</a>
+          <a href={`/rendu-dynamique/species/${s}`}>{s}</a>
         </li>
       ))
     }
   </ul>
+  <h3 class="mt-6">Stations météo disponibles</h3>
+    <ul>
+        {
+            stations.map((w) => (
+                <li>
+                    <a href={`/rendu-dynamique/weather/${w}`}>{w}</a>
+                </li>
+            ))
+        }
+    </ul>
 </Layout>
